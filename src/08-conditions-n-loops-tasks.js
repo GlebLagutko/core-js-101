@@ -193,8 +193,8 @@ function findFirstSingleChar(str) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  return `${isStartIncluded ? '[' : '('}${a < b ? a : b}, ${b > a ? b : a}${isEndIncluded ? ']' : ')'}`;
 }
 
 
@@ -210,8 +210,8 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 
@@ -227,8 +227,9 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  // eslint-disable-next-line radix
+  return +num.toString().split('').reverse().join('');
 }
 
 
@@ -238,7 +239,6 @@ function reverseInteger(/* num */) {
  *
  * See algorithm here : https://en.wikipedia.org/wiki/Luhn_algorithm
  *
- * @param {number} cnn
  * @return {boolean}
  *
  * @example:
@@ -251,9 +251,13 @@ function reverseInteger(/* num */) {
  *   4571234567890111 => false
  *   5436468789016589 => false
  *   4916123456789012 => false
+ * @param ccn
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  const sum = ccn.toString().split``.reverse()
+    .map((el, i) => (i % 2 ? +el * 2 : +el))
+    .map((num) => (num > 9 ? num - 9 : num)).reduce((acc, n) => acc + n);
+  return sum % 10 === 0;
 }
 
 /**
@@ -261,7 +265,6 @@ function isCreditCardNumber(/* ccn */) {
  *   step1 : find sum of all digits
  *   step2 : if sum > 9 then goto step1 otherwise return the sum
  *
- * @param {number} n
  * @return {number}
  *
  * @example:
@@ -269,9 +272,15 @@ function isCreditCardNumber(/* ccn */) {
  *   23456 ( 2+3+4+5+6 = 20, 2+0 = 2) => 2
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
+ * @param num
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  let n = num;
+  while (n > 9) {
+    n = n.toString().split``.reduce((acc, number) => acc + +number, 0);
+  }
+
+  return n;
 }
 
 
@@ -296,8 +305,32 @@ function getDigitalRoot(/* num */) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const brackets = new Map();
+  brackets.set(')', '(');
+  brackets.set('}', '{');
+  brackets.set(']', '[');
+  brackets.set('>', '<');
+  const stack = [];
+  let flag = true;
+  // eslint-disable-next-line no-restricted-syntax
+  for (const el of str.split``) {
+    if (brackets.has(el)) {
+      if (stack.pop() === brackets.get(el)) {
+        // eslint-disable-next-line no-continue
+        continue;
+      } else {
+        flag = false;
+        break;
+      }
+    } else {
+      stack.push(el);
+    }
+  }
+  if (stack.length !== 0) {
+    flag = false;
+  }
+  return flag;
 }
 
 
@@ -321,8 +354,8 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 
@@ -338,6 +371,7 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/webalizer/logs'] => '/'
  */
+// eslint-disable-next-line no-unused-vars
 function getCommonDirectoryPath(/* pathes */) {
   throw new Error('Not implemented');
 }
@@ -363,7 +397,23 @@ function getCommonDirectoryPath(/* pathes */) {
  */
 // eslint-disable-next-line no-unused-vars
 function getMatrixProduct(m1, m2) {
-  throw new Error('Not implemented');
+  const aNumRows = m1.length;
+  const aNumCols = m1[0].length;
+  const bNumCols = m2[0].length;
+  const m = new Array(aNumRows); // initialize array of rows
+  // eslint-disable-next-line no-plusplus
+  for (let r = 0; r < aNumRows; ++r) {
+    m[r] = new Array(bNumCols); // initialize the current row
+    // eslint-disable-next-line no-plusplus
+    for (let c = 0; c < bNumCols; ++c) {
+      m[r][c] = 0; // initialize the current cell
+      // eslint-disable-next-line no-plusplus
+      for (let i = 0; i < aNumCols; ++i) {
+        m[r][c] += m1[r][i] * m2[i][c];
+      }
+    }
+  }
+  return m;
 }
 
 
