@@ -66,7 +66,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-  return value.split(' ')[1] + ' ' + value.split(' ')[2].slice(0, -1);
+  return `${value.split(' ')[1]} ${value.split(' ')[2].slice(0, -1)}`;
 }
 
 
@@ -127,7 +127,7 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-  let index = str.indexOf(value);
+  const index = str.indexOf(value);
   if (index === -1) {
     return str;
   }
@@ -208,9 +208,11 @@ function extractEmails(str) {
  */
 function getRectangleString(width, height) {
   let rectangle = `┌${'─'.repeat(width - 2)}┐\n`;
+  // eslint-disable-next-line no-param-reassign
   height -= 2;
   while (height > 0) {
     rectangle += `│${' '.repeat(width - 2)}│\n`;
+    // eslint-disable-next-line no-param-reassign
     height -= 1;
   }
   rectangle += `└${'─'.repeat(width - 2)}┘\n`;
@@ -237,10 +239,9 @@ function getRectangleString(width, height) {
 function encodeToRot13(str) {
   const input = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
   const output = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
-  const index = x => input.indexOf(x);
-  const translate = x => index(x) > -1 ? output[index(x)] : x;
+  const index = (x) => input.indexOf(x);
+  const translate = (x) => (index(x) > -1 ? output[index(x)] : x);
   return str.split('').map(translate).join('');
-
 }
 
 /**

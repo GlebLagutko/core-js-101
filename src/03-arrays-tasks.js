@@ -234,7 +234,14 @@ function toArrayOfSquares(arr) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
 function getMovingSum(arr) {
-
+  return arr.reduce((acc, item) => {
+    if (acc.length === 0) {
+      acc.push(item);
+    } else {
+      acc.push(item + acc[acc.length - 1]);
+    }
+    return acc;
+  }, []);
 }
 
 /**
@@ -248,7 +255,7 @@ function getMovingSum(arr) {
  * [ 'a', 'b', 'c' , null ]  => [ "b", null ]
  * [ "a" ] => []
  */
-function getSecondItems(arr ) {
+function getSecondItems(arr) {
   return arr.filter((_, i) => i % 2);
 }
 
@@ -257,7 +264,6 @@ function getSecondItems(arr ) {
  * Propagates every item in sequence its position times
  * Returns an array that consists of: one first item, two second items, tree third items etc.
  *
- * @param {array} arr
  * @return {array}
  *
  * @example :
@@ -285,7 +291,7 @@ function propagateItemsByPositionIndex(/* arr */) {
  *   [ 1,2,3,4,5,6,7,8,9,10 ] => [ 10, 9, 8 ]
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
-function get3TopItems( arr ) {
+function get3TopItems(arr) {
   return arr.sort((a, b) => b - a).slice(0, 3);
 }
 
@@ -303,8 +309,8 @@ function get3TopItems( arr ) {
  *   [ null, 1, 'elephant' ] => 1
  *   [ 1, '2' ] => 1
  */
-function getPositivesCount(arr ) {
-  throw new Error('Not implemented');
+function getPositivesCount(arr) {
+  return arr.reduce((accum, value) => ((value > 0 && typeof value === 'number') ? accum + 1 : accum), 0);
 }
 
 /**
@@ -320,8 +326,20 @@ function getPositivesCount(arr ) {
  *   [ 'nine','eight','nine','eight'] => [ 'eight','eight','nine','nine']
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const valueOfString = new Map(
+    [['zero', 0],
+      ['one', 1],
+      ['two', 2],
+      ['three', 3],
+      ['four', 4],
+      ['five', 5],
+      ['six', 6],
+      ['seven', 7],
+      ['eight', 8],
+      ['nine', 9]],
+  );
+  return arr.sort((a, b) => valueOfString.get(a) - valueOfString.get(b));
 }
 
 /**
@@ -336,8 +354,8 @@ function sortDigitNamesByNumericOrder(/* arr */) {
  *   [ -1, 1, -1, 1 ]      => 0
  *   [ 1, 10, 100, 1000 ]  => 1111
  */
-function getItemsSum(/* arr */) {
-  throw new Error('Not implemented');
+function getItemsSum(arr) {
+  return arr.reduce((acc, value) => acc + value, 0);
 }
 
 /**
@@ -352,8 +370,8 @@ function getItemsSum(/* arr */) {
  *  [ -1, 'false', null, 0 ] => 2
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
-function getFalsyValuesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getFalsyValuesCount(arr) {
+  return arr.reduce((acc, value) => (!value ? acc + 1 : acc), 0);
 }
 
 /**
@@ -370,8 +388,8 @@ function getFalsyValuesCount(/* arr */) {
  *    [ null, undefined, null ], null => 2
  *    [ true, 0, 1, 'true' ], true => 1
  */
-function findAllOccurences(/* arr, item */) {
-  throw new Error('Not implemented');
+function findAllOccurences(arr, item) {
+  return arr.reduce((acc, value) => (value === item ? acc + 1 : acc), 0);
 }
 
 /**
@@ -385,8 +403,8 @@ function findAllOccurences(/* arr, item */) {
  *    [1, 2, 3, 4, 5]                   => '1,2,3,4,5'
  *    ['rock', 'paper', 'scissors']     => 'rock,paper,scissors'
  */
-function toStringList(/* arr */) {
-  throw new Error('Not implemented');
+function toStringList(arr) {
+  return arr.join(',');
 }
 
 
@@ -416,8 +434,9 @@ function toStringList(/* arr */) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  return arr.sort((a, b) => (a.city.localeCompare(b.city)))
+    .sort((a, b) => a.country.localeCompare(b.country));
 }
 
 /**
@@ -438,8 +457,13 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+// eslint-disable-next-line no-unused-vars
+function getIdentityMatrix(n) {
+  const arr = Array(n).fill(Array(n).fill(0));
+  return arr.map((element, elemIndex) => element.map((item, itemIndex) => {
+    if (itemIndex === elemIndex) return 1;
+    return item;
+  }));
 }
 
 /**
@@ -455,8 +479,8 @@ function getIdentityMatrix(/* n */) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
+function getIntervalArray(start, end) {
+  return new Array(end - start + 1).fill(0).map((_, i) => start + i);
 }
 
 /**
@@ -470,8 +494,8 @@ function getIntervalArray(/* start, end */) {
  *   [ 'a', 'a', 'a', 'a' ]  => [ 'a' ]
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
-function distinct(/* arr */) {
-  throw new Error('Not implemented');
+function distinct(arr) {
+  return Array.from(new Set(arr));
 }
 
 /**
@@ -504,7 +528,8 @@ function distinct(/* arr */) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
+// eslint-disable-next-line no-unused-vars
+function group(array, keySelector, valueSelector) {
   throw new Error('Not implemented');
 }
 
@@ -522,8 +547,8 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  return arr.flatMap(childrenSelector);
 }
 
 
@@ -562,8 +587,12 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const length = Math.floor(arr.length / 2);
+  const head = arr.splice(0, length);
+  const tail = arr.splice(arr.length - length);
+
+  return [...tail, ...arr, ...head];
 }
 
 

@@ -53,9 +53,8 @@ function parseDataFromIso8601(value) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear( date ) {
-
-  const isDivisible = dividend => divisor => dividend % divisor === 0;
+function isLeapYear(date) {
+  const isDivisible = (dividend) => (divisor) => dividend % divisor === 0;
   const isYearDivisible = isDivisible(date.getFullYear());
 
   return isYearDivisible(100) ? isYearDivisible(400) : isYearDivisible(4);
@@ -98,8 +97,14 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
+function angleBetweenClockHands(date) {
+  const date1 = new Date(date);
+  let hours = date1.getUTCHours();
+  if (hours > 11) hours -= 12;
+  const minutes = date1.getUTCMinutes();
+  let angle = Math.abs((60 * hours - 11 * minutes) / 2);
+  if (angle > 180) angle = 360 - angle;
+  return angle * (Math.PI / 180);
 }
 
 

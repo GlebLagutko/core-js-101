@@ -54,11 +54,10 @@ function getCicleCircumference(radius) {
 function getAverage(value1, value2) {
   if (value1 + value2 < Number.MAX_SAFE_INTEGER) {
     return (value1 + value2) / 2;
-  } else {
-    const remainder1 = value1 % 2;
-    const remainder2 = value2 % 2;
-    return value1 / 2 + value2 / 2 + (remainder1 + remainder2) / 2;
   }
+  const remainder1 = value1 % 2;
+  const remainder2 = value2 % 2;
+  return value1 / 2 + value2 / 2 + (remainder1 + remainder2) / 2;
 }
 
 /**
@@ -77,6 +76,7 @@ function getAverage(value1, value2) {
  *   (-5,0) (10,-10) => 18.027756377319946
  */
 function getDistanceBetweenPoints(x1, y1, x2, y2) {
+  // eslint-disable-next-line no-restricted-properties
   return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 }
 

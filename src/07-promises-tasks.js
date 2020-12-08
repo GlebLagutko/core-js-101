@@ -29,7 +29,17 @@
  *                                                    //  Ask her again.';
  */
 function willYouMarryMe(isPositiveAnswer) {
-  throw new Error('Not implemented');
+  return new Promise((res, rej) => {
+    if (typeof isPositiveAnswer === 'boolean') {
+      if (isPositiveAnswer) {
+        res('Hooray!!! She said "Yes"!');
+      } else {
+        res('Oh no, she said "No".');
+      }
+    } else {
+      rej(new Error('Wrong parameter is passed! Ask her again.'));
+    }
+  });
 }
 
 
