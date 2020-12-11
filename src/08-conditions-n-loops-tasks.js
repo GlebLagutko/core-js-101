@@ -118,8 +118,22 @@ function isTriangle(a, b, c) {
  *   { top:20, left:20, width: 20, height: 20 }    =>  false
  *
  */
-function doRectanglesOverlap(/* rect1, rect2 */) {
-  throw new Error('Not implemented');
+function doRectanglesOverlap(rectA, rectB) {
+  const leftTopA = rectA.left;
+  const rightTopA = rectA.left + rectA.width;
+  const topLeftA = rectA.top;
+  const bottomLEftA = rectA.top + rectA.height;
+  const leftTopB = rectB.left;
+  const rightTopB = rectB.left + rectB.width;
+  const topLeftB = rectB.top;
+  const bottomLEftB = rectB.top + rectB.height;
+  if (rightTopA < leftTopB || leftTopA > rightTopB) {
+    return false;
+  }
+  if (bottomLEftA < topLeftB || topLeftA > bottomLEftB) {
+    return false;
+  }
+  return true;
 }
 
 
@@ -167,7 +181,13 @@ function isInsideCircle(circle, point) {
  */
 // eslint-disable-next-line no-unused-vars
 function findFirstSingleChar(str) {
-  throw new Error('Not implemented');
+  let result;
+  const arr = str.split('');
+  result = arr.find((elem) => arr.indexOf(elem) === arr.lastIndexOf(elem));
+  if (result === undefined) {
+    result = null;
+  }
+  return result;
 }
 
 

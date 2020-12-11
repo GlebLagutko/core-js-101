@@ -530,7 +530,11 @@ function distinct(arr) {
  */
 // eslint-disable-next-line no-unused-vars
 function group(array, keySelector, valueSelector) {
-  throw new Error('Not implemented');
+  return array.reduce((map, el) => {
+    const key = keySelector(el);
+
+    return map.set(key, (map.get(key) || []).concat(valueSelector(el)));
+  }, new Map());
 }
 
 
